@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Service View</title>
+</head>
+<body>
+    <h1>Hello world!</h1>
+    <button onclick="getTime()">Get time</button>
+    <button onclick="getRoll()">Roll dice</button>
+    <h2>Time service output</h2>
+    <div id="time-dump"></div>
+
+    <hr>
+
+    <h2>Dice service output</h2>
+    <div id="dice-dump"></div>
+
+    <script>
+      function fetchAndDump (url, div) {
+        fetch(url)
+          .then(res => res.json())
+          .then(response => {
+            let dump = `Received response: ${JSON.stringify(response)}`;
+            console.log(dump);
+            document.getElementById(div).append(dump);
+          })
+          .catch(err => {
+            console.log(err);
+            document.getElementById(div).append(err);
+          })
+      }
+
+      function getTime () {
+        fetchAndDump('time-service/', 'time-dump');
+      }
+
+      function getRoll() {
+        fetchAndDump('dice-service/', 'dice-dump');
+      }
+    </script>
+</body>
+</html>
